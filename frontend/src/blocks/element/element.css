@@ -1,0 +1,12 @@
+.element {
+  width: 282px;
+  color: #000;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+}
+@media screen and (max-width: 900px) {
+  .element {
+    width: 100%;
+  }
+}

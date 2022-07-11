@@ -1,0 +1,7 @@
+.popup__error {
+  font-size: 12px;
+  line-height: 1.21;
+  color: rgb(255, 0, 0);
+  position: absolute;
+  max-width: 358px;
+}

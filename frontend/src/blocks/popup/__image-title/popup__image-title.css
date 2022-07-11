@@ -1,0 +1,10 @@
+.popup__image-title {
+  display: table-caption;
+  caption-side: bottom;
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.21;
+  max-width: 75vw;
+  max-height: 12px;
+  overflow: hidden;
+}

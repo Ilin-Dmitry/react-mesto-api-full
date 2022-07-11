@@ -1,0 +1,11 @@
+html {
+  background-color: #000;
+}
+.page {
+  position: relative;
+  background-color: #000;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  color: #fff;
+}
+
+

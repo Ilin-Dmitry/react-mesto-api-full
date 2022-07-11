@@ -1,0 +1,19 @@
+.profile__info-status {
+  width: 100%;
+  margin: 0;
+  margin-top: 16px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.21;
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media screen and (max-width: 900px) {
+  .profile__info-status {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+}
