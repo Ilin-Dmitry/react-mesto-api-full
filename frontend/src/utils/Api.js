@@ -90,7 +90,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-39',
+  baseUrl: 'http://localhost:3001',
   headers: {
     authorization: '3a1a4a90-7af6-46c1-8e15-2024cad1ccce',
     'Content-Type': 'application/json'
@@ -98,3 +98,12 @@ const api = new Api({
 });
 
 export default api;
+
+// Для обращения на исходный сервер
+// const api = new Api({
+//   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-39',
+//   headers: {
+//     authorization: '3a1a4a90-7af6-46c1-8e15-2024cad1ccce',
+//     'Content-Type': 'application/json'
+//   }
+// });
