@@ -90,6 +90,7 @@ function App() {
   useEffect (() => {
     api.getProfile()
     .then(res => {
+      console.log('App.js => здесь должен быть currentUser', res);
       setCurrentUser(res)
     })
     .catch(error => {
@@ -130,7 +131,8 @@ function App() {
 
   }
   function handleCardLike (card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
+    console.log('запускаем changeLikeCardStatus');
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
@@ -166,24 +168,26 @@ function App() {
     setLoggedIn('true')
   }
 
-  function checkToken() {
-    const token = localStorage.getItem('token')
-    if (token) {
-      checkTokenAPI(token)
-      .then((res) => {
-        setUserEmail(res.email)
-        setLoggedIn('true')
-        history.push('/')
-      })
-      .catch(error => {
-        console.log(`Ошибка ${error}`)
-      })
-    }
-  }
+  // function checkToken() {
+  //   console.log('Начался checkToken');
+  //   const token = localStorage.getItem('token')
+  //   console.log('А вот это и есть token', token);
+  //   if (token) {
+  //     checkTokenAPI(token)
+  //     .then((res) => {
+  //       setUserEmail(res.email)
+  //       setLoggedIn('true')
+  //       history.push('/')
+  //     })
+  //     .catch(error => {
+  //       console.log(`Ошибка ${error}`)
+  //     })
+  //   }
+  // }
 
-  useEffect(() => {
-    checkToken()
-  }, [])
+  // useEffect(() => {
+  //   checkToken()
+  // }, [])
 
   function signOut () {
     localStorage.removeItem('token');

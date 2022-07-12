@@ -8,6 +8,7 @@ function Login ({handleLoggedIn, handleRequestErr, handleTooltipOpen}) {
   function handleLogin (email, password) {
     loginAPI(email, password)
     .then((res) => {
+      console.log('res from fr Login.js =>', res, res.token);
       localStorage.setItem('token', res.token)
     })
     .then(() => {

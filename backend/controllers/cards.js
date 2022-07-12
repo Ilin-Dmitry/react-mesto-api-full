@@ -13,12 +13,12 @@ const errorMessages = {
 
 function checkCard(card, res) {
   if (!card) { throw new NotFoundError(errorMessages.notFoundCard); }
-  res.send({ data: card });
+  res.send(card);
 }
 
 module.exports.showAllCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.send({ data: cards }))
+    .then((cards) => res.send(cards))
     .catch((err) => next(errModule.handleError(err, res)));
 };
 
@@ -52,6 +52,7 @@ module.exports.deleteCard = (req, res, next) => {
 };
 
 module.exports.likeCard = (req, res, next) => {
+  console.log('запускаем likeCard на бэке');
   Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
     .then((card) => {
       checkCard(card, res);
@@ -63,6 +64,7 @@ module.exports.likeCard = (req, res, next) => {
 };
 
 module.exports.dislikeCard = (req, res, next) => {
+  console.log('запускаем dislikeCard на бэке');
   Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
     .then((card) => {
       checkCard(card, res);

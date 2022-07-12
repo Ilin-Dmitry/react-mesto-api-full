@@ -13,12 +13,13 @@ class Api {
   }
 
   getProfile() {
-    return fetch(`${this._baseUrl}/users/me`, {headers: this._headers})
+    return fetch(`${this._baseUrl}/users/me`, {headers: this._headers, credentials: 'include'})
     .then(this._checkResponse)
   }
 
   editProfile(name, about) {
     return fetch(`${this._baseUrl}/users/me`, { method: "PATCH",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name: name,
@@ -29,7 +30,8 @@ class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {headers: this._headers})
+    return fetch(`${this._baseUrl}/cards`, {headers: this._headers,
+      credentials: 'include'})
     .then(this._checkResponse)
   }
 
@@ -56,6 +58,7 @@ class Api {
   deleteLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: "DELETE",
+      credentials: 'include',
       headers: this._headers
     })
     .then(this._checkResponse)
@@ -64,15 +67,19 @@ class Api {
   addLike(id) {
     return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: "PUT",
+      credentials: 'include',
       headers: this._headers
     })
     .then(this._checkResponse)
   }
 
   changeLikeCardStatus(id, isLiked) {
+    console.log('запускаем чейнджлайк, isLiked =>', isLiked);
     if (isLiked) {
+      console.log('пошел addLike');
       return this.addLike(id)
     } else {
+      console.log('пошел deleteLike');
       return this.deleteLike(id)
     }
   }
