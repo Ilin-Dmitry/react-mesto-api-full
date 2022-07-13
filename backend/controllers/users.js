@@ -117,6 +117,12 @@ module.exports.login = (req, res, next) => {
     .catch(next);
 };
 
+module.exports.logout = (req, res) => {
+  console.log('logout has started');
+  res.clearCookie('token');
+  res.send({ message: 'токен успешно удален из cookies' });
+};
+
 module.exports.showMe = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const { celebrate, Joi, errors } = require('celebrate');
-const { login, createUser } = require('./controllers/users');
+const { login, createUser, logout } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/NotFoundError');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -38,6 +38,7 @@ app.post('/signup', celebrate({
     password: Joi.string().required(),
   }),
 }), createUser);
+app.get('/signout', logout);
 
 app.use(auth);
 app.use('/', require('./routes/users'));

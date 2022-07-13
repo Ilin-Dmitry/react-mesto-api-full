@@ -13,7 +13,7 @@ import AddPlacePopup from './AddPlacePopup';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
-import { checkTokenAPI } from '../utils/Auth';
+import { checkTokenAPI, logoutAPI } from '../utils/Auth';
 import InfoTooltip from './InfoTooltip';
 
 function App() {
@@ -204,7 +204,8 @@ function App() {
   }, [])
 
   function signOut () {
-    localStorage.removeItem('token');
+    // localStorage.removeItem('token');
+    logoutAPI();
     history.push('/sign-in')
   }
 

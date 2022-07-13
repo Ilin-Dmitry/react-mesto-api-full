@@ -71,3 +71,11 @@ export function checkTokenAPI () {
     return res
   })
 }
+
+export function logoutAPI () {
+  return fetch(`${BASE_URL}/signout`, {
+    method: 'GET',
+    credentials: 'include'
+  })
+  .then(checkResponse)
+}
