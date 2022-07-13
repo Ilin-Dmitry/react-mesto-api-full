@@ -90,7 +90,6 @@ function App() {
   useEffect (() => {
     api.getProfile()
     .then(res => {
-      console.log('App.js => здесь должен быть currentUser', res);
       setCurrentUser(res)
     })
     .catch(error => {
@@ -132,7 +131,6 @@ function App() {
   }
   function handleCardLike (card) {
     const isLiked = card.likes.some(i => i === currentUser._id);
-    console.log('запускаем changeLikeCardStatus');
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         setCards((state) => state.map((c) => c._id === card._id ? newCard : c))

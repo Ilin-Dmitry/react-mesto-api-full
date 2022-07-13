@@ -25,7 +25,7 @@ module.exports.showAllCards = (req, res, next) => {
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.status(201).send({ data: card }))
+    .then((card) => res.status(201).send(card))
     .catch((err) => next(errModule.handleError(err, res, {
       badRequestMessage: errorMessages.badRequestShowCards,
     })));
@@ -52,7 +52,6 @@ module.exports.deleteCard = (req, res, next) => {
 };
 
 module.exports.likeCard = (req, res, next) => {
-  console.log('запускаем likeCard на бэке');
   Card.findByIdAndUpdate(req.params.cardId, { $addToSet: { likes: req.user._id } }, { new: true })
     .then((card) => {
       checkCard(card, res);
@@ -64,7 +63,6 @@ module.exports.likeCard = (req, res, next) => {
 };
 
 module.exports.dislikeCard = (req, res, next) => {
-  console.log('запускаем dislikeCard на бэке');
   Card.findByIdAndUpdate(req.params.cardId, { $pull: { likes: req.user._id } }, { new: true })
     .then((card) => {
       checkCard(card, res);

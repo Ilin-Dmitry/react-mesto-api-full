@@ -38,6 +38,7 @@ class Api {
   addCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         name,
@@ -50,6 +51,7 @@ class Api {
   deleteCard(id) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: "DELETE",
+      credentials: 'include',
       headers: this._headers
     })
     .then(this._checkResponse)
@@ -74,12 +76,9 @@ class Api {
   }
 
   changeLikeCardStatus(id, isLiked) {
-    console.log('запускаем чейнджлайк, isLiked =>', isLiked);
     if (isLiked) {
-      console.log('пошел addLike');
       return this.addLike(id)
     } else {
-      console.log('пошел deleteLike');
       return this.deleteLike(id)
     }
   }
@@ -87,6 +86,7 @@ class Api {
   setAvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatar

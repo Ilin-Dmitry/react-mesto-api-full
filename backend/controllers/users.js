@@ -74,7 +74,7 @@ module.exports.refreshUser = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => next(errModule.handleError(err, res, {
       badRequestMessage: errorMessages.badRequestRefreshUser,
       notFoundMessage: errorMessages.notFoundRefreshUser,
@@ -87,7 +87,7 @@ module.exports.refreshUserAvatar = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => next(errModule.handleError(err, res, {
       badRequestMessage: errorMessages.badRequestRefreshAvatar,
       notFoundMessage: errorMessages.notFoundRefreshUser,
