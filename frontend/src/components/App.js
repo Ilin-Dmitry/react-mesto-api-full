@@ -88,7 +88,8 @@ function App() {
     setSelectedCard({});
   }
   useEffect (() => {
-    api.getProfile()
+    if (loggedIn)
+    {api.getProfile()
     .then(res => {
       setCurrentUser(res)
     })
@@ -101,8 +102,8 @@ function App() {
     })
     .catch(error => {
       console.log(`Ошибка ${error}`)
-    })
-  }, [])
+    })}
+  }, [loggedIn])
   function handleUpdateUser({name, about}) {
     api.editProfile(name, about)
       .then(res => {
@@ -151,7 +152,7 @@ function App() {
   function handleAddPlaceSubmit({name, link}) {
     api.addCard(name,link)
       .then(res => {
-        setCards([res, ...cards])
+        setCards([...cards, res])
       })
       .then(() =>
         {closeAllPopups()}
@@ -183,9 +184,24 @@ function App() {
   //   }
   // }
 
-  // useEffect(() => {
-  //   checkToken()
-  // }, [])
+  function checkToken() {
+    console.log('start checkToken from App.js');
+    checkTokenAPI()
+      .then((res) => {
+        console.log('res in checkToken =>', res)
+        setUserEmail(res.email)
+        setLoggedIn('true');
+        history.push('/');
+      })
+      .catch(error => {
+        console.log(`Ошибка ${error}`)
+      })
+  }
+
+  useEffect(() => {
+    checkToken()
+
+  }, [])
 
   function signOut () {
     localStorage.removeItem('token');

@@ -31,17 +31,43 @@ export function loginAPI (email, password) {
   .then(checkResponse)
 }
 
-export function checkTokenAPI (token) {
+// export function checkTokenAPI (token) {
+//   return fetch(`${BASE_URL}/users/me`, {
+//     method: 'GET',
+//     credentials: 'include',
+//     headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization' : `Bearer ${token}`
+//     }
+//   })
+//   .then(checkResponse)
+//   .then((res) => {
+//     return res.data
+//   })
+// }
+
+export function checkTokenAPI () {
+  console.log('document.coookie =>', document.cookie.indexOf('token'));
+
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     credentials: 'include',
     headers: {
         'Content-Type': 'application/json',
-        'Authorization' : `Bearer ${token}`
+        // 'Authorization' : `Bearer ${token}`
     }
+  })
+  .then(res => {
+    console.log('res res.status =>', res.status);
+    console.log('res.ok? =>', res.ok);
+    if (res.status !== 401) {
+      return res
+    }
+
   })
   .then(checkResponse)
   .then((res) => {
-    return res.data
+    console.log('res =>',res)
+    return res
   })
 }
