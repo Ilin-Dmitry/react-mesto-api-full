@@ -160,13 +160,25 @@ function App() {
   }
 
   function handleLoggedIn (email) {
+    console.log('Начался handleLoggedIn in App.js');
+    console.log('CurrentUser handleLoggedIn in App.js', currentUser);
+    setLoggedIn('true')
+
+    // api.getProfile()
+    // .then(res => {
+    //   console.log('А вот и res in handleLoggedIn', res);
+    //   setCurrentUser(res)
+    // })
     api.getProfile()
     .then(res => {
+
+      console.log('res from useEffect in handleLoggedIn =>', res);
       setCurrentUser(res)
     })
+    // .then((res) )
     .then(() => {
+      console.log('CurrentUser handleLoggedIn in then', currentUser);
       setUserEmail(email)
-      setLoggedIn('true')
     })
     .catch(error => {
       console.log(`Ошибка ${error}`)
