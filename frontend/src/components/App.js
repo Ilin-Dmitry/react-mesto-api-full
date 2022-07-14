@@ -13,7 +13,7 @@ import AddPlacePopup from './AddPlacePopup';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
-import { checkTokenAPI, logoutAPI, checkCookieWithToken } from '../utils/Auth';
+import { checkTokenAPI, logoutAPI, checkCookieWithTokenAPI } from '../utils/Auth';
 import InfoTooltip from './InfoTooltip';
 
 function App() {
@@ -23,13 +23,10 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
-
   const [currentUser, setCurrentUser] = useState({})
   const [cards, setCards] = useState([])
-
   const [loggedIn, setLoggedIn] = useState(false)
   const [userEmail, setUserEmail] = useState('')
-
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [isRequestSuccessful, setIsRequestSuccessful] = useState(false);
 
@@ -88,9 +85,11 @@ function App() {
     setSelectedCard({});
   }
   useEffect (() => {
+    console.log('loggedIn? =>', loggedIn);
     if (loggedIn)
     {api.getProfile()
     .then(res => {
+      console.log('res from useEffect =>', res);
       setCurrentUser(res)
     })
     .catch(error => {
@@ -115,7 +114,6 @@ function App() {
       .catch(error => {
         console.log(`Ошибка ${error}`)
       })
-
   }
   function handleUpdateAvatar ({avatar}) {
     api.setAvatar(avatar)
@@ -128,7 +126,6 @@ function App() {
       .catch(error => {
         console.log(`Ошибка ${error}`)
       })
-
   }
   function handleCardLike (card) {
     const isLiked = card.likes.some(i => i === currentUser._id);
@@ -163,42 +160,28 @@ function App() {
   }
 
   function handleLoggedIn (email) {
-    setUserEmail(email)
-    setLoggedIn('true')
+    api.getProfile()
+    .then(res => {
+      setCurrentUser(res)
+    })
+    .then(() => {
+      setUserEmail(email)
+      setLoggedIn('true')
+    })
+    .catch(error => {
+      console.log(`Ошибка ${error}`)
+    })
   }
 
-  // function checkToken() {
-  //   console.log('Начался checkToken');
-  //   const token = localStorage.getItem('token')
-  //   console.log('А вот это и есть token', token);
-  //   if (token) {
-  //     checkTokenAPI(token)
-  //     .then((res) => {
-  //       setUserEmail(res.email)
-  //       setLoggedIn('true')
-  //       history.push('/')
-  //     })
-  //     .catch(error => {
-  //       console.log(`Ошибка ${error}`)
-  //     })
-  //   }
-  // }
-
   function checkToken() {
-    // console.log('start checkToken from App.js');
-    // // console.log('checkCookieWithToken() =>>>', checkCookieWithToken());
-    // checkCookieWithToken()
-    //   .then((res) => {
-    //     console.log('res in checkToken', res);
-    //   })
-    console.log('checkCookieWithToken() =>>>', checkCookieWithToken());
-    checkCookieWithToken()
+    checkCookieWithTokenAPI()
       .then(res => {
         if(res) {
             checkTokenAPI()
               .then((res) => {
                 console.log('res in checkToken =>', res)
-                setUserEmail(res.email)
+                setUserEmail(res.email);
+                // setCurrentUser(res);
                 setLoggedIn('true');
                 history.push('/');
               })
@@ -207,41 +190,16 @@ function App() {
               })
           }
       })
-    // if(checkCookieWithToken()) {
-    //   checkTokenAPI()
-    //     .then((res) => {
-    //       console.log('res in checkToken =>', res)
-    //       setUserEmail(res.email)
-    //       setLoggedIn('true');
-    //       history.push('/');
-    //     })
-    //     .catch(error => {
-    //       console.log(`Ошибка ${error}`)
-    //     })
-    // }
-
-      // checkTokenAPI()
-      // .then((res) => {
-      //   console.log('res in checkToken =>', res)
-      //   setUserEmail(res.email)
-      //   setLoggedIn('true');
-      //   history.push('/');
-      // })
-      // .catch(error => {
-      //   console.log(`Ошибка ${error}`)
-      // })
-
   }
 
   useEffect(() => {
     checkToken()
-
   }, [])
 
   function signOut () {
-    // localStorage.removeItem('token');
     logoutAPI();
-    history.push('/sign-in')
+    setCurrentUser({});
+    history.push('/sign-in');
   }
 
   return (

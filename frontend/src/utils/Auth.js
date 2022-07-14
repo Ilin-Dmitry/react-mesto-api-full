@@ -1,4 +1,3 @@
-// const BASE_URL = 'https://auth.nomoreparties.co';
 const BASE_URL = 'http://localhost:3001';
 function checkResponse(res) {
   if (res.ok) {
@@ -31,28 +30,12 @@ export function loginAPI (email, password) {
   .then(checkResponse)
 }
 
-// export function checkTokenAPI (token) {
-//   return fetch(`${BASE_URL}/users/me`, {
-//     method: 'GET',
-//     credentials: 'include',
-//     headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization' : `Bearer ${token}`
-//     }
-//   })
-//   .then(checkResponse)
-//   .then((res) => {
-//     return res.data
-//   })
-// }
-
 export function checkTokenAPI () {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     credentials: 'include',
     headers: {
         'Content-Type': 'application/json',
-        // 'Authorization' : `Bearer ${token}`
     }
   })
   .then((res) => {
@@ -85,29 +68,17 @@ export function logoutAPI () {
   .then(checkResponse)
 }
 
-export function checkCookieWithToken() {
+export function checkCookieWithTokenAPI() {
   return fetch(`${BASE_URL}/checkCookie`, {
     method: 'GET',
     credentials: 'include'
   })
-  .then((res) => {
-    console.log('res in checkCookieWithToken', res);
-    console.log('res.text in checkCookieWithToken', res.text);
-    console.log('res.message in checkCookieWithToken', res.message);
-    console.log('res.body in checkCookieWithToken', res.body);
-
-    return res.text();
-  })
   .then(text => {
-    console.log('text from checkCookieWithToken =>', text);
     if(text === 'false') {
-      console.log('Вернулся false');
       return false
     }
     if(text === 'true') {
-      console.log('Вернулся true');
       return true
     }
   })
-  // .then(checkResponse)
 }
