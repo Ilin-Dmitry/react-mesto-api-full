@@ -13,7 +13,7 @@ import AddPlacePopup from './AddPlacePopup';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from './ProtectedRoute';
-import { checkTokenAPI, logoutAPI } from '../utils/Auth';
+import { checkTokenAPI, logoutAPI, checkCookieWithToken } from '../utils/Auth';
 import InfoTooltip from './InfoTooltip';
 
 function App() {
@@ -185,17 +185,52 @@ function App() {
   // }
 
   function checkToken() {
-    console.log('start checkToken from App.js');
-    checkTokenAPI()
-      .then((res) => {
-        console.log('res in checkToken =>', res)
-        setUserEmail(res.email)
-        setLoggedIn('true');
-        history.push('/');
+    // console.log('start checkToken from App.js');
+    // // console.log('checkCookieWithToken() =>>>', checkCookieWithToken());
+    // checkCookieWithToken()
+    //   .then((res) => {
+    //     console.log('res in checkToken', res);
+    //   })
+    console.log('checkCookieWithToken() =>>>', checkCookieWithToken());
+    checkCookieWithToken()
+      .then(res => {
+        if(res) {
+            checkTokenAPI()
+              .then((res) => {
+                console.log('res in checkToken =>', res)
+                setUserEmail(res.email)
+                setLoggedIn('true');
+                history.push('/');
+              })
+              .catch(error => {
+                console.log(`Ошибка ${error}`)
+              })
+          }
       })
-      .catch(error => {
-        console.log(`Ошибка ${error}`)
-      })
+    // if(checkCookieWithToken()) {
+    //   checkTokenAPI()
+    //     .then((res) => {
+    //       console.log('res in checkToken =>', res)
+    //       setUserEmail(res.email)
+    //       setLoggedIn('true');
+    //       history.push('/');
+    //     })
+    //     .catch(error => {
+    //       console.log(`Ошибка ${error}`)
+    //     })
+    // }
+
+      // checkTokenAPI()
+      // .then((res) => {
+      //   console.log('res in checkToken =>', res)
+      //   setUserEmail(res.email)
+      //   setLoggedIn('true');
+      //   history.push('/');
+      // })
+      // .catch(error => {
+      //   console.log(`Ошибка ${error}`)
+      // })
+
   }
 
   useEffect(() => {

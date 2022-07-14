@@ -47,14 +47,19 @@ export function loginAPI (email, password) {
 // }
 
 export function checkTokenAPI () {
-  console.log('document.coookie =>', document.cookie.indexOf('token'));
-
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     credentials: 'include',
     headers: {
         'Content-Type': 'application/json',
         // 'Authorization' : `Bearer ${token}`
+    }
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res
+    } else {
+      return Promise.reject(res.status)
     }
   })
   .then(res => {
@@ -78,4 +83,31 @@ export function logoutAPI () {
     credentials: 'include'
   })
   .then(checkResponse)
+}
+
+export function checkCookieWithToken() {
+  return fetch(`${BASE_URL}/checkCookie`, {
+    method: 'GET',
+    credentials: 'include'
+  })
+  .then((res) => {
+    console.log('res in checkCookieWithToken', res);
+    console.log('res.text in checkCookieWithToken', res.text);
+    console.log('res.message in checkCookieWithToken', res.message);
+    console.log('res.body in checkCookieWithToken', res.body);
+
+    return res.text();
+  })
+  .then(text => {
+    console.log('text from checkCookieWithToken =>', text);
+    if(text === 'false') {
+      console.log('Вернулся false');
+      return false
+    }
+    if(text === 'true') {
+      console.log('Вернулся true');
+      return true
+    }
+  })
+  // .then(checkResponse)
 }

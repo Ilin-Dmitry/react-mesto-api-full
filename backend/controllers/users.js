@@ -139,3 +139,11 @@ module.exports.showMe = (req, res, next) => {
       );
     });
 };
+
+module.exports.checkCookieWithToken = (req, res, next) => {
+  console.log('req.cookies.token =>', req.cookies.token);
+  if (!req.cookies.token) {
+    return res.send('false');
+  }
+  return res.send('true');
+};
