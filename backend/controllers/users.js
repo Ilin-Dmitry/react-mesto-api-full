@@ -118,7 +118,6 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  console.log('logout has started');
   res.clearCookie('token');
   res.send({ message: 'токен успешно удален из cookies' });
 };
@@ -140,8 +139,7 @@ module.exports.showMe = (req, res, next) => {
     });
 };
 
-module.exports.checkCookieWithToken = (req, res, next) => {
-  console.log('req.cookies.token =>', req.cookies.token);
+module.exports.checkCookieWithToken = (req, res) => {
   if (!req.cookies.token) {
     return res.send('false');
   }
