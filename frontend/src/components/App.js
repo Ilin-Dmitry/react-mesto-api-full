@@ -85,11 +85,9 @@ function App() {
     setSelectedCard({});
   }
   useEffect (() => {
-    console.log('loggedIn? =>', loggedIn);
     if (loggedIn)
     {api.getProfile()
     .then(res => {
-      console.log('res from useEffect =>', res);
       setCurrentUser(res)
     })
     .catch(error => {
@@ -160,24 +158,12 @@ function App() {
   }
 
   function handleLoggedIn (email) {
-    console.log('Начался handleLoggedIn in App.js');
-    console.log('CurrentUser handleLoggedIn in App.js', currentUser);
     setLoggedIn('true')
-
-    // api.getProfile()
-    // .then(res => {
-    //   console.log('А вот и res in handleLoggedIn', res);
-    //   setCurrentUser(res)
-    // })
     api.getProfile()
     .then(res => {
-
-      console.log('res from useEffect in handleLoggedIn =>', res);
       setCurrentUser(res)
     })
-    // .then((res) )
     .then(() => {
-      console.log('CurrentUser handleLoggedIn in then', currentUser);
       setUserEmail(email)
     })
     .catch(error => {
@@ -187,13 +173,22 @@ function App() {
 
   function checkToken() {
     checkCookieWithTokenAPI()
+      .then((res) => {
+        return res.text();
+      })
+      .then(text => {
+        if(text === 'false') {
+          return false
+        }
+        if(text === 'true') {
+          return true
+        }
+      })
       .then(res => {
         if(res) {
             checkTokenAPI()
               .then((res) => {
-                console.log('res in checkToken =>', res)
                 setUserEmail(res.email);
-                // setCurrentUser(res);
                 setLoggedIn('true');
                 history.push('/');
               })

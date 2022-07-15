@@ -7,9 +7,6 @@ function Login ({handleLoggedIn, handleRequestErr, handleTooltipOpen}) {
   const history = useHistory();
   function handleLogin (email, password) {
     loginAPI(email, password)
-    .then((res) => {
-      localStorage.setItem('token', res.token)
-    })
     .then(() => {
       handleLoggedIn(email)
       history.push('/');
@@ -24,7 +21,6 @@ function Login ({handleLoggedIn, handleRequestErr, handleTooltipOpen}) {
       <Header><Link to="/sign-up" className="header__link">Регистрация</Link></Header>
       <AuthForm heading="Вход" buttonName="Войти" onSubmit={handleLogin}></AuthForm>
     </>
-
   )
 }
 

@@ -6,7 +6,6 @@ function Main({onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCa
 
   const currentUser = useContext(CurrentUserContext);
   const {name, about, avatar} = currentUser;
-  console.log('currentUser => ', currentUser);
 
   return (
     <main>
