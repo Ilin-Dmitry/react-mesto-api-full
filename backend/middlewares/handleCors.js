@@ -1,4 +1,4 @@
-const allowedCors = ['localhost:3000', 'http://localhost:3000'];
+const allowedCors = ['http://mesto.dm-ilin.nomorepartiesxyz.ru', 'https://mesto.dm-ilin.nomorepartiesxyz.ru', 'http://localhost:3000'];
 
 module.exports = (req, res, next) => {
   const { origin } = req.headers;
