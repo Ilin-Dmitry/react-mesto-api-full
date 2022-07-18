@@ -5,6 +5,8 @@ const errModule = require('../errors/handleError');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports = (req, res, next) => {
+  console.log('NODE_ENV from auth.js => ', NODE_ENV);
+      console.log('JWT_SECRET from auth.js => ', JWT_SECRET);
   const { token } = req.cookies;
   if (!token) {
     throw new UnauthorizedError('Необходима авторизация!');
