@@ -121,7 +121,10 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie('token');
+  res.clearCookie('token', {
+    sameSite: 'none',
+    secure: true,
+  });
   res.send({ message: 'токен успешно удален из cookies' });
 };
 
